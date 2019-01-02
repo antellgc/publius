@@ -1,0 +1,5 @@
+name: publius
+channels:
+  - defaults
+prefix: /Users/greg/anaconda3/envs/publius
+
