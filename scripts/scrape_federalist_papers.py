@@ -8,13 +8,25 @@ url = 'https://www.congress.gov/resources/display/content/The+Federalist+Papers'
 author_names = ['Madison','Hamilton','Jay']
 
 def get_soup_from_url(url):
-    """Query a given url and return the page content as BeautifulSoup object."""
+    """
+    Query a given url and return the page content as BeautifulSoup object.
+    Parameters:
+        url: the url to be scraped
+    Returns:
+        soup: a BeautifulSoup object
+    """
     page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
     return soup
 
 def parse_federalist_text(soup):
-    """Extract the text information based on known structure of Federalist papers."""
+    """
+    Extract the text information based on known structure of Federalist papers.
+    Parameters:
+        soup: a BeautifulSoup object
+    Returns:
+        all_texts: a list of the scraped texts
+    """
     text_block = soup.find_all("div", class_="wiki-content")[0].get_text()
     all_texts = []
     n = 1
@@ -28,8 +40,14 @@ def parse_federalist_text(soup):
         n += 1
     return all_texts
 
-def extract_table_data(soup):
-    """Extract table information and return as list object."""
+def extract_federalist_table(soup):
+    """
+    Extract table information and return as list object.
+    Parameters:
+        soup: a BeautifulSoup object
+    Returns:
+        all_rows: a list of lists containing table information
+    """
     count = 0
     row = []
     all_rows = []
@@ -43,8 +61,15 @@ def extract_table_data(soup):
             row = []
     return all_rows
 
-def store_paper_data_in_dataframe(all_rows, all_texts):
-    """Store table data and text data into a single pandas dataframe."""
+def federalist_data_to_dataframe(all_rows, all_texts):
+    """
+    Store table data and text data into a single pandas dataframe.
+    Parameters:
+        all_rows: a list of lists containing table information
+        all_texts: a list of the scraped texts
+    Returns:
+        federalist_dataframe: a pandas dataframe combining the two data sources
+    """
     federalist_dataframe = pd.DataFrame(all_rows)
     federalist_dataframe.columns = ['No.','Title','Author','Publication','Date']
     # adds text and text length columns
@@ -53,10 +78,12 @@ def store_paper_data_in_dataframe(all_rows, all_texts):
     federalist_dataframe.loc[:,'Length'] = federalist_dataframe['Text'].apply(len)
     return federalist_dataframe
 
-def select_papers_by_author(federalist_dataframe,author_name):
+def select_papers_by_author(federalist_dataframe, author_name):
     """Provide name and return dataframe containing only this author."""
     author_dataframe = federalist_dataframe[federalist_dataframe['Author'] == author_name].reset_index().drop(['index'], axis=1)
     return author_dataframe
+
+def 
 
 # selects according to author
 #df_ham = df[df['Author'] == 'Hamilton'].reset_index().drop(['index'], axis=1)
@@ -64,6 +91,7 @@ def select_papers_by_author(federalist_dataframe,author_name):
 #df_jay = df[df['Author'] == 'Jay'].reset_index().drop(['index'], axis=1)
 
 # saves to raw_data directory
-df_ham .to_csv('../raw_data/hamilton.csv', index=False)
-df_mad .to_csv('../raw_data/madison.csv', index=False)
-df_jay .to_csv('../raw_data/jay.csv', index=False)
+df_ham.to_csv('../raw_data/hamilton.csv', index=False)
+df_mad.to_csv('../raw_data/madison.csv', index=False)
+df_jay.to_csv('../raw_data/jay.csv', index=False)
+
