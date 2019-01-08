@@ -94,6 +94,7 @@ def main(url, author_names, raw_data_path):
     all_texts = parse_federalist_text(soup)
     all_rows = extract_federalist_table(soup)
     federalist_dataframe = federalist_data_to_dataframe(all_rows, all_texts)
+    save_to_path(federalist_dataframe, "federalist", raw_data_path)
     # iterates through the authors of interest
     for author_name in author_names:
         author_dataframe = select_papers_by_author(federalist_dataframe, author_name)
