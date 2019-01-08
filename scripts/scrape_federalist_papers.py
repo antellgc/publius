@@ -5,7 +5,7 @@ pd.set_option('chained_assignment',None)
 
 # global variables
 url = "https://www.congress.gov/resources/display/content/The+Federalist+Papers"
-author_names = ['Madison','Hamilton','Jay','Hamilton and Madison','Hamilton or Madison']
+author_names = ['Madison','Hamilton','Jay']
 raw_data_path = "../raw_data/"
 
 def get_soup_from_url(url):
@@ -75,6 +75,8 @@ def federalist_data_to_dataframe(all_rows, all_texts):
     federalist_dataframe.columns = ['No.','Title','Author','Publication','Date']
     federalist_dataframe.loc[:,'Text'] = all_texts
     federalist_dataframe.loc[:,'Length'] = federalist_dataframe['Text'].apply(len)
+    # fix Madison entries
+    federalist_dataframe['Author'] = federalist_dataframe['Author'].apply(lambda x: 'Madison' if 'Madison' in x else x)
     return federalist_dataframe
 
 def select_papers_by_author(federalist_dataframe, author_name):
@@ -97,16 +99,7 @@ def main(url, author_names, raw_data_path):
         author_dataframe = select_papers_by_author(federalist_dataframe, author_name)
         print(author_name, author_dataframe.shape)
         save_to_path(author_dataframe, author_name, raw_data_path)
-    print("Compelete")
+    print("Complete")
 
-main(url, author_names, raw_data_path)
-
-# selects according to author
-#df_ham = df[df['Author'] == 'Hamilton'].reset_index().drop(['index'], axis=1)
-#df_mad = df[df['Author'] == 'Madison'].reset_index().drop(['index'], axis=1)
-#df_jay = df[df['Author'] == 'Jay'].reset_index().drop(['index'], axis=1)
-
-# saves to raw_data directory
-#df_ham.to_csv('../raw_data/hamilton.csv', index=False)
-#df_mad.to_csv('../raw_data/madison.csv', index=False)
-#df_jay.to_csv('../raw_data/jay.csv', index=False)
+if __name__ == "__main__":
+    main(url, author_names, raw_data_path)
