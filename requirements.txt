@@ -252,7 +252,7 @@ typing==3.6.2
 ujson==1.35
 unicodecsv==0.14.1
 Unidecode==1.0.22
-urllib3==1.23
+urllib3==1.26.5
 virtualenv==15.1.0
 wcwidth==0.1.7
 WeasyPrint==0.42.3
