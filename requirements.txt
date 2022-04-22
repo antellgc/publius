@@ -179,7 +179,7 @@ pymc3==3.4.1
 pyodbc==4.0.24
 pyOpenSSL==18.0.0
 pyparsing==2.2.0
-PyPDF2==1.26.0
+PyPDF2==1.27.5
 Pyphen==0.9.4
 PySocks==1.6.8
 pytest==3.8.0
