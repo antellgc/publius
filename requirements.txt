@@ -198,7 +198,7 @@ QtAwesome==0.4.4
 qtconsole==4.4.1
 QtPy==1.5.0
 regex==2018.8.29
-reportlab==3.4.0
+reportlab==3.5.55
 requests==2.19.1
 requests-oauthlib==1.0.0
 requests-toolbelt==0.8.0
